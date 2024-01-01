@@ -37,4 +37,33 @@ use PDO;
 
             return $this->conn->lastInsertId();
         }
+
+        public function get(string $id):array | false{
+            $sql = "SELECT * FROM patient_details WHERE id = :id";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $data;
+        }
+        public function update(array $current, array $new):int{
+            $sql = "UPDATE patient_details
+                    SET first_name = :first_name, last_name = :last_name, gender = :gender, address = :address, date_of_birth = :date_of_birth, phone = :phone, age = :age WHERE id = :id";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue(":first_name", $new["first_name"] ?? $current["first_name"], PDO::PARAM_STR);
+            $stmt->bindValue(":last_name", $new["last_name"] ?? $current["last_name"], PDO::PARAM_STR);
+            $stmt->bindValue(":gender", $new["gender"] ?? $current["gender"] , PDO::PARAM_STR);
+            $stmt->bindValue(":address", $new["address"] ?? $current["address"], PDO::PARAM_STR);
+            $stmt->bindValue(":date_of_birth", $new["date_of_birth"] ?? $current["date_of_birth"],PDO::PARAM_STR);
+            $stmt->bindValue(":phone", $new["phone"] ?? $current["phone"], PDO::PARAM_STR);
+            $stmt->bindValue(":age", $new["age"] ?? $current["age"], PDO::PARAM_STR);
+            $stmt->bindValue(":id", $current["id"], PDO::PARAM_INT);
+
+            $stmt->execute();
+
+            return $stmt->rowCount();
+        }
     }

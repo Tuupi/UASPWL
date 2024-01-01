@@ -1,5 +1,6 @@
 <?php
 namespace PMS;
+use ErrorException;
 use Throwable;
 class ErrorHandler{
     public static function handleException(Throwable $e):void {
@@ -11,5 +12,8 @@ class ErrorHandler{
             "file" => $e->getFile(),
             "line" => $e->getLine()
         ]);
+    }
+    public static function handleError(int $errno, string $errstr, string $errfile, int $errline):bool{
+        throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
     }
 }

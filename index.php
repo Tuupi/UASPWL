@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 use PMS\Controller\PatientController;
-use PMS\ErrorHandler;
 use PMS\Model\PatientGateway;
 
 require __DIR__."/vendor/autoload.php";
@@ -9,6 +8,7 @@ require __DIR__."/vendor/autoload.php";
 spl_autoload_register(function ($class) {
     require __DIR__ . "/src/$class.php";
 });
+set_error_handler("PMS\ErrorHandler::handleError");
 set_exception_handler("PMS\ErrorHandler::handleException");
 header("Content-type: application/json; charset=UTF-8");
 
