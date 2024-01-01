@@ -1,13 +1,15 @@
 <?php
-
 declare(strict_types=1);
+use PMS\Controller\PatientController;
+use PMS\ErrorHandler;
+use PMS\Model\PatientGateway;
 
 require __DIR__."/vendor/autoload.php";
 
 spl_autoload_register(function ($class) {
     require __DIR__ . "/src/$class.php";
 });
-set_exception_handler("PMS\ErrorHandler::handleException()");
+set_exception_handler("PMS\ErrorHandler::handleException");
 header("Content-type: application/json; charset=UTF-8");
 
 $route = explode("/", $_SERVER["REQUEST_URI"]);
@@ -21,7 +23,7 @@ $id = $route[2] ?? null;
 
 $database = new \PMS\Model\Database("localhost", "db_clinic", "root", "");
 
-$database->getConnection();
+$gateway = new PatientGateway($database);
 
-$controller = new \PMS\Controller\PatientController();
+$controller = new PatientController($gateway);
 $controller->processRequest($_SERVER["REQUEST_METHOD"], $id);
