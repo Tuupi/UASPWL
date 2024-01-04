@@ -8,9 +8,9 @@ use PMS\Model\PatientGateway;
 
 require __DIR__."/vendor/autoload.php";
 
-spl_autoload_register(function ($class) {
-    require __DIR__ . "/src/$class.php";
-});
+// spl_autoload_register(function ($class) {
+//     require __DIR__ . "/src/$class.php";
+// });
 set_error_handler("PMS\ErrorHandler::handleError");
 set_exception_handler("PMS\ErrorHandler::handleException");
 header("Content-type: application/json; charset=UTF-8");
@@ -32,7 +32,7 @@ if($route[1] == "patients") {
 }else{
     http_response_code(404);
     echo json_encode([
-        "Error" => "Route doesn't available"
+        "Error" => "Route isn't available"
     ]);
     exit;
 }

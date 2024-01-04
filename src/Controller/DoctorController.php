@@ -21,7 +21,7 @@ class DoctorController{
         $doctor = $this->gateway->get($id);
         if(!$doctor){
             http_response_code(404);
-            echo json_encode(["message" => "Patient not found"]);
+            echo json_encode(["message" => "Doctor not found"]);
             return;
         }
         switch($method){
@@ -40,7 +40,7 @@ class DoctorController{
                 $rows = $this->gateway->update($doctor, $data);
                 
                 echo json_encode([
-                    "message" => "Patient $id Updated",
+                    "message" => "Doctor $id Updated",
                     "rows" => $rows
                 ]);
                 break;
