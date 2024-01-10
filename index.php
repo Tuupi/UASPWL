@@ -13,27 +13,42 @@ require __DIR__."/vendor/autoload.php";
 // });
 set_error_handler("PMS\ErrorHandler::handleError");
 set_exception_handler("PMS\ErrorHandler::handleException");
-header("Content-type: application/json; charset=UTF-8");
+
 
 $route = explode("/", $_SERVER["REQUEST_URI"]);
 $database = new \PMS\Model\Database("localhost", "db_clinic", "root", "");
-
-if($route[1] == "patients") {
-    $id = $route[2] ?? null;
-    $gateway = new PatientGateway($database);
-    $controller = new PatientController($gateway);
-    $controller->processRequest($_SERVER["REQUEST_METHOD"], $id);
-    
-} else if($route[1] == "doctors"){
-    $id = $route[2] ?? null;
-    $gateway = new DoctorGateway($database);
-    $controller = new DoctorController($gateway);
-    $controller->processRequest($_SERVER["REQUEST_METHOD"], $id);
+if($route[1] == "api"){
+    if($route[2] == "patients") {
+        header("Content-type: application/json; charset=UTF-8");
+        $id = $route[3] ?? null;
+        $gateway = new PatientGateway($database);
+        $controller = new PatientController($gateway);
+        $controller->processRequest($_SERVER["REQUEST_METHOD"], $id);
+        
+    } else if($route[2] == "doctors"){
+        header("Content-type: application/json; charset=UTF-8");
+        $id = $route[3] ?? null;
+        $gateway = new DoctorGateway($database);
+        $controller = new DoctorController($gateway);
+        $controller->processRequest($_SERVER["REQUEST_METHOD"], $id);
+    }
+    else {
+        header("Content-type: application/json; charset=UTF-8");
+        http_response_code(404);
+        echo json_encode([
+        "Error" => "Route isn't available"
+        ]);
+        exit;
+    }
+} else
+ if($route[1] == "register"){
+    header("Content-type: text/html; charset=UTF-8");
+    require 'src/View/Regist.html';
 }else{
+    header("Content-type: application/json; charset=UTF-8");
     http_response_code(404);
     echo json_encode([
         "Error" => "Route isn't available"
     ]);
     exit;
 }
-
