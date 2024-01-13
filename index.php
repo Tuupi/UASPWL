@@ -2,8 +2,10 @@
 declare(strict_types=1);
 
 use PMS\Controller\DoctorController;
+use PMS\Controller\LoginController;
 use PMS\Controller\PatientController;
 use PMS\Model\DoctorGateway;
+use PMS\Model\LoginGateway;
 use PMS\Model\PatientGateway;
 
 require __DIR__."/vendor/autoload.php";
@@ -31,6 +33,19 @@ if($route[1] == "api"){
         $gateway = new DoctorGateway($database);
         $controller = new DoctorController($gateway);
         $controller->processRequest($_SERVER["REQUEST_METHOD"], $id);
+    } else if($route[2] == "login"){
+        if($route[3] ?? null){
+            header("Content-type: application/json; charset=UTF-8");
+            http_response_code(403);
+            echo json_encode([
+            "Error" => "Forbidden Method"
+            ]);
+            exit;
+        } else {
+            $gateway = new LoginGateway($database);
+            $controller = new LoginController($gateway);
+            $controller->processRequest($_SERVER["REQUEST_METHOD"]);
+        }
     }
     else {
         header("Content-type: application/json; charset=UTF-8");
@@ -44,6 +59,13 @@ if($route[1] == "api"){
  if($route[1] == "register"){
     header("Content-type: text/html; charset=UTF-8");
     require 'src/View/Regist.html';
+}
+else if ($route[1] == ""){
+    header("Content-type: text/html; charset=UTF-8");
+    require 'src/view/index.html';
+}else if($route[1] == "login"){
+    header("Content-type: text/html; charset=UTF-8");
+    require 'src/view/login.html';
 }else{
     header("Content-type: application/json; charset=UTF-8");
     http_response_code(404);

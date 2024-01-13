@@ -41,7 +41,7 @@ class PatientController
                     "rows" => $rows
                 ]);
                 break;
-                
+
             default:
                 http_response_code(405);
                 header("Allow: GET, POST");
@@ -57,7 +57,7 @@ class PatientController
             case "POST":
                 $data = (array) json_decode(file_get_contents("php://input"), true);
                 $errors = $this->getValidationErrors($data);
-                if(! empty($errors)){
+                if(!empty($errors)){
                     http_response_code(422);
                     echo json_encode(["errors" => $errors]);
                     break;
@@ -78,10 +78,28 @@ class PatientController
 
     private function getValidationErrors(array $data):array{
         $errors = [];
-
-        if(!array_key_exists("first_name",$data) && !array_key_exists("last_name",$data) && !array_key_exists("gender",$data) && !array_key_exists("address",$data) && !array_key_exists("date_of_birth",$data) && !array_key_exists("phone",$data) && !array_key_exists("age",$data)){
-            $errors[] = "Input all the fields";
+        if(!array_key_exists("full_name", $data)){
+            $errors[] = "Input Name fields";
+        }else if(!array_key_exists("gender", $data)){
+            $errors[] = "Input Gender fields";
+        }else if(!array_key_exists("address", $data)){
+            $errors[] = "Input Address fields";
+        }else if(!array_key_exists("date_of_birth", $data)){
+            $errors[] = "Input Date of Birth fields";
+        }else if(!array_key_exists("phone", $data)){
+            $errors[] = "Input Phone number fields";
+        }else if(!array_key_exists("email", $data)){
+            $errors[] = "Input Email fields";
+        }else if(!array_key_exists("occupation", $data)){
+            $errors[] = "Input Occupation fields";
+        }else if(!array_key_exists("parent_name", $data)){
+            $errors[] = "Input Parent Name fields";
+        }else if(!array_key_exists("parent_phone", $data)){
+            $errors[] = "Input Parent Phone Number fields";
+        }else if(!array_key_exists("guardian_name", $data)){
+            $errors[] = "Input Guardian Name fields";
         }
+
         return $errors;
     }
 }

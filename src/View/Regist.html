@@ -14,7 +14,7 @@
         <div class="container">
             <header>Registration</header>
 
-            <form action="#">
+            <form action="" method = "POST" onsubmit="return onSubmit()">
                 <div class="form first">
                     <div class="details personal">
                         <span class="title">Personal Details</span>
@@ -22,49 +22,53 @@
                         <div class="fields">
                             <div class="input-field">
                                 <label>Full Name</label>
-                              <input type="text" placeholder="Enter Your Name" required>  
+                              <input type="text" placeholder="Enter Your Name" id="full_name" required>  
                             </div>
 
                             <div class="input-field">
                                 <label>Date of Birth</label>
-                              <input type="date" placeholder="Enter Birth Date" required>  
+                              <input type="date" placeholder="Enter Birth Date" id="date_of_birth"required>  
                             </div>
 
                             <div class="input-field">
                                 <label>Email</label>
-                              <input type="text" placeholder="Enter Your Email" required>  
+                              <input type="text" placeholder="Enter Your Email" id="email" required>  
                             </div>
                             <div class="input-field">
                                 <label>Mobile Number</label>
-                              <input type="text" placeholder="Enter Mobile Number" required>  
+                              <input type="text" placeholder="Enter Mobile Number" id="phone" required>  
                             </div>
 
                             <div class="input-field">
                                 <label>Gender</label>
-                              <input type="text" placeholder="Gender" required>  
+                              <input type="text" placeholder="Gender" id="gender" required>  
                             </div>
+                            <div class="input-field">
+                              <label>Address</label>
+                            <input type="text" placeholder="Address" id="address" required>  
+                          </div>
 
                             <div class="input-field">
                                 <label>Occupation</label>
-                              <input type="text" placeholder="Enter Occupation" required>  
+                              <input type="text" placeholder="Enter Occupation" id="occupation"required>  
                             </div>
                             <div class="input-field">
                                 <label>Parents Name</label>
-                              <input type="text" placeholder="Enter Parents Name" required>  
+                              <input type="text" placeholder="Enter Parents Name" id="parent_name" required>  
                             </div>
                             <div class="input-field">
                                 <label>Parents Mobile Number</label>
-                              <input type="text" placeholder="Enter Parent's Number" required>  
+                              <input type="text" placeholder="Enter Parent's Number" id="parent_phone" required>  
                             </div>
                               <div class="input-field">
                                 <label>Guardian</label>
-                              <input type="text" placeholder="Enter Guardian Name" required>  
+                              <input type="text" placeholder="Enter Guardian Name" id="guardian_name" required>  
                             </div>
-                            <select Status="Status">
+                            <!-- <select Status="Status">
                                 <option value="">Pilih Status</option>
                                 <option value="Menikah">Menikah</option>
                                 <option value="Belum Menikah">Belum Menikah</option>
-                            </select>
+                            </select> -->
                         </div>
                         <button class="submitBtn">
                             <span class="BtnText">Submit</span>
@@ -73,5 +77,32 @@
                 </div>
             </form>
         </div>
+        <script> 
+        function onSubmit(){
+          var req = new XMLHttpRequest();
+          var url = "/api/patients";
+
+          var datajson = JSON.stringify({
+          full_name : document.getElementById("full_name").value,
+          date_of_birth : document.getElementById("date_of_birth").value.toString(),
+          email : document.getElementById("email").value,
+          address : document.getElementById("address").value,
+          phone : document.getElementById("phone").value,
+          gender : document.getElementById("gender").value,
+          occupation : document.getElementById("occupation").value,
+          parent_name : document.getElementById("parent_name").value,
+          parent_phone : document.getElementById("parent_phone").value,
+          guardian_name : document.getElementById("guardian_name").value,
+        })
+
+          req.open("POST", url, true);
+          req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+          req.onload = function(){
+          console.log (this.responseText);
+          };
+          req.send(datajson);
+          return false;
+        }
+        </script>
     </body>
 </html>
