@@ -10,7 +10,7 @@
     <!--Content-->
 <div class="container">
     <div class="heading">Admin Login</div>
-    <form action="" class="form">
+    <form action="" method="POST" class="form" onsubmit="return onLogin()">
       <input required="" class="input" type="email" name="email" id="email" placeholder="E-mail">
       <input required="" class="input" type="password" name="password" id="password" placeholder="Password">
       <span class="forgot-password"><a href="#">Forgot Password ?</a></span>
@@ -18,4 +18,28 @@
       
     </form>
       <span class="agreement"><a href="#">Learn user licence agreement</a></span>
+      <script>
+        function onLogin(){
+          var req = new XMLHttpRequest();
+          var url = "/api/login";
+
+          var datajson = JSON.stringify({
+          username : document.getElementById("email").value,
+          password : document.getElementById("password").value
+        })
+          req.open("POST", url, true);
+          req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+          req.onload = function(){
+          console.log (this.responseText);
+          if(req.status == 202){
+            var responseText = req.responseText;
+            var responseObject = JSON.parse(responseText);
+            document.cookie = `PWL-SESSION = ${responseObject.Token}`;
+            window.location.href = '/';
+          }
+          };
+          req.send(datajson);
+          return false;
+      }
+      </script>
   </div>

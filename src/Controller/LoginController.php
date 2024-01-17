@@ -1,14 +1,12 @@
 <?php
 namespace PMS\Controller;
 
-use Exception;
 use PMS\Model\LoginGateway;
-use Firebase\JWT\JWT as JWT;
-use Session;
-use stdClass;
+use PMS\Controller\Session;
+
 
 class LoginController{
-    private $secret_key = "togetherwearestronger";
+    
     public function __construct(private LoginGateway $gateway)
     {
         
@@ -34,6 +32,11 @@ class LoginController{
                     echo json_encode(["errors" => "Username & password tidak valid"]);
                     break;
                 }
+                
+                $session = new SessionController();
+                $session = $session->sessionCreate($login);
+                echo json_encode(["Message" => "Login Confirmed", "Token" => $session]);
+                http_response_code(202);
                 break;
             default : 
                 http_response_code(405);
@@ -48,25 +51,5 @@ class LoginController{
             $errors[] = "Input password fields";
         }
         return $errors;
-    }
-    public function sessionCreate(array $payload):void{
-        $jwt = JWT::encode($payload, $this->secret_key, 'HS256');
-        setcookie("PWL-SESSION", $jwt);
-    }
-    public function getCurrentSession(): stdClass{
-        if($_COOKIE["PWL-SESSION"]){
-            try{
-            $jwt = $_COOKIE["PWL-SESSION"];
-            $payload = JWT::decode($jwt, $this->secret_key);
-            return $payload;
-            } catch(Exception $e){
-                http_response_code(404);
-                echo json_encode(["Errors" => "You aren't login yet"]);
-            }
-        }
-        else {
-            http_response_code(404);
-            echo json_encode(["Errors" => "You aren't login yet"]);
-        }
     }
 }
