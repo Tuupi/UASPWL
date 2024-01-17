@@ -63,6 +63,7 @@ section:nth-child(even){
     color: var(--green);
     cursor: pointer;
     font-size: 1.7rem;
+    background: #fff;
 }
 
 .btn span{
@@ -226,11 +227,236 @@ section:nth-child(even){
     line-height: 2;
 }
 
+.about .row{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
 
+.about .row .image{
+    flex: 1 1 45rem;
+}
 
+.about .row .image img{
+    width: 100%;
+}
 
+.about .row .content{
+    flex: 1 1 45rem;
+}
 
+.about .row .content h3{
+    color: var(--black);
+    text-shadow: var(--text-shadow);
+    font-size: 4rem;
+    line-height: 1.8;
+}
 
+.about .row .content p{
+    color: var(--light-color);
+    padding: 1rem 0;
+    font-size: 1.5rem;
+    line-height: 1.8;
+}
+
+.doctors .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(27rem, 1fr));
+    gap: 2rem;
+}
+
+.doctors .box-container .box{
+    text-align: center;
+    background: #fff;
+    border-radius: .5rem;
+    border: var(--border);
+    box-shadow: var(--box-shadow);
+    padding: 2rem;
+}
+
+.doctors .box-container.box img{
+   height: 20rem;
+   border: var(--border);
+   border-radius: .5rem;
+   margin-top: 1rem;
+   margin-bottom: 1rem; 
+}
+
+.doctors .box-container .box h3{
+    color: var(--black);
+    font-size: 2.5rem;
+}
+
+.doctors .box-container .box span{
+    color: var(--green);
+    font-size: 1.5rem;
+}
+
+.doctors .box-container .box .share{
+    padding-top: 2rem;
+}
+
+.doctors .box-container .box .share a{
+    height: 5rem;
+    width: 5rem;
+    line-height: 4.5rem;
+    font-size: 2rem;
+    color: var(--green);
+    border-radius: .5rem;
+    border: var(--border);
+    margin: .3rem;
+}
+
+.doctors .box-container .box .share a:hover{
+    background: var(--green);
+    color: #fff;
+    box-shadow: var(--box-shadow);
+} 
+
+.footer .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: 2rem;
+}
+
+.footer .box-container .box h3{
+    font-size: 2.5rem;
+    color: var(--black);
+    padding: 1rem 0;
+}
+
+.footer .box-container .box a{
+    display: block;
+    font-size: 2.5rem;
+    color: var(--light-color);
+    padding: 1rem 0;
+}
+
+.footer .box-container .box a i{
+    padding-right: .5rem;
+    color: var(--green);
+}
+
+.footer .box-container .box a:hover i{
+    padding-right: .5rem;
+}
+
+.footer .credit{
+    padding: 1rem;
+    padding-top: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 2rem;
+    color: var(--light-color);
+    border-top: .1rem solid rgba(0, 0, 0, .1);
+}
+
+.footer .credit span{
+    color: var(--green);
+}
+
+.book .row{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.book .row .image{
+    flex: 1 1 45rem;
+}
+
+.book .row .image img{
+    width: 100%;
+}
+
+.book .row form{
+    flex: 1 1 45rem;
+    background: #fff;
+    border: var(--border);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    padding: 2rem;
+    border-radius: .5rem;
+}
+
+.book .row form h3{
+    color: var(--black);
+    padding-bottom: 1rem;
+    font-size: 3rem;
+}
+
+.book .row form .box{
+    width: 100%;
+    margin: .7rem 0;
+    border-radius: .5rem;
+    border: var(--border);
+    font-size: 1.6rem;
+    color: var(--black);
+    text-transform: none;
+}
+
+.book .row form .btn{
+    padding: 1rem 4rem;
+}
+
+.review .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(27rem, 1f));
+    gap: 2rem;
+}
+
+.review .box-container .box{
+    border: var(--border);
+    box-shadow: var(--box-shadow);
+    border-radius: .5rem;
+    padding: 2.5rem;
+    background: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.review .box-container .box img{
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: .5rem solid #fff;
+}
+
+.review .box-container .box h3{
+    color: #fff;
+    font-size: 2.2rem;
+    padding: .5rem 0;
+}
+
+.review .box-container .box .stars i{
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.review .box-container .box .text{
+    color: var(--light-color);
+    line-height: 1.8;
+    font-size: 1.6rem;
+    padding-top: 4rem;
+}
+
+.review .box-container .box::before{
+    content: '';
+    position: absolute;
+    top: -4rem; left: 50%;
+    transform: translateX(-50%);
+    background: var(--green);
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    height: 25rem;
+    width: 120%;
+    z-index: -1;
+}
 
 
 

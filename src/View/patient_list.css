@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+  }
+  
+  .patient-list {
+    max-width: 1155px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff; /* Added background color */
+  }
+  
+  th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f7f7f7;
+  }
+  
+  @media (max-width: 600px) {
+    .patient-list {
+      padding: 10px;
+    }
+  
+    table {
+      font-size: 14px;
+    }
+  }
