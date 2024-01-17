@@ -66,6 +66,12 @@ else if ($route[1] == ""){
 }else if($route[1] == "login"){
     header("Content-type: text/html; charset=UTF-8");
     require 'src/view/login.html';
+}else if($route[1] == "records"){
+    header("Content-type: text/html; charset=UTF-8");
+    require 'src/view/Medrecord.html';
+}else if($route[1] == "patients"){
+    header("Content-type: text/html; charset=UTF-8");
+    require 'src/view/patientList.html';
 }else{
     header("Content-type: application/json; charset=UTF-8");
     http_response_code(404);

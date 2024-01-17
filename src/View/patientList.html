@@ -2,41 +2,98 @@
 <html>
   <head>
     <title>Patient List</title>
-    <link rel="stylesheet" type="text/css" href="patient_list.css">
+    <link rel="stylesheet" type="text/css" href="src/view/patient_list.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
   </head>
   <body>
     <div class="patient-list">
       <h1>Patient List</h1>
-      <table>
+      <input type="text" id="searchInput" placeholder="Search">
+      <table id="myTable">
         <thead>
           <tr>
-            <th>Patient ID</th>
-            <th>Name</th>
-            <th>Date of Birth</th>
+            <th>Full Name</th>
             <th>Gender</th>
-            <th>Contact Information</th>
+            <th>Address</th>
+            <th>Date of Birth</th>
+            <th>Phone Number</th>
+            <th>Email</th>
             <th>Occupation</th>
             <th>Parent's Name</th>
             <th>Parent's Number</th>
             <th>Guardian Name</th>
-            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>001</td>
-            <td>Kafka</td>
-            <td>January 1, 1980</td>
-            <td>Female</td>
-            <td>(123) 456-7890<br>Kafka@stellaronhunter1.com<br>Penacony gamble street, City</td>
-            <td>Stellaron Hunter</td>
-            <td>Elio</td>
-            <td>085780776870</td>
-            <td>Blade</td>
-            <td>Single and ready to mingle</td>
-          </tr>
+          
         </tbody>
       </table>
+      <div id="paginationContainer"></div>
     </div>
+    <script>
+        var req = new XMLHttpRequest();
+        var url = "/api/patients";
+        req.open("GET", url, true);
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.onload = function(){
+          var responseText = req.responseText;
+          var responseObject = JSON.parse(responseText);
+          generateTable(responseObject);
+        }
+        req.send();
+      function generateTable(responseObject) {
+        var table = $('#myTable').DataTable({
+          data: responseObject,
+          columns: [
+            { data: 'full_name' },
+            { data: 'gender' },
+            { data: 'address' },
+            { data: 'date_of_birth' },
+            { data: 'phone' },
+            { data: 'email' },
+            { data: 'occupation' },
+            { data: 'parent_name' },
+            { data: 'parent_phone' },
+            { data: 'guardian_name' }
+          ]
+        });
+
+        $('#searchInput').on('keyup', function() {
+          table.search(this.value).draw();
+        });
+
+        table.on('draw', function() {
+          addPagination();
+        });
+
+        addPagination();
+      }
+
+      function addPagination() {
+        $('#myTable').DataTable().destroy();
+        $('#myTable').DataTable({
+          data: responseObject,
+          columns: [
+            { data: 'full_name' },
+            { data: 'gender' },
+            { data: 'address' },
+            { data: 'date_of_birth' },
+            { data: 'phone' },
+            { data: 'email' },
+            { data: 'occupation' },
+            { data: 'parent_name' },
+            { data: 'parent_phone' },
+            { data: 'guardian_name' }
+          ],
+          paging: true
+        });
+      }
+
+
+    </script>
   </body>
 </html>

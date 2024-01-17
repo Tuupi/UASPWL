@@ -4,21 +4,54 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="widht=device-width, inital-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!--CSS-->
     <link rel="stylesheet" href="src/view/login.css">
-
+    <script src="https://www.google.com/recaptcha/enterprise.js" async defer></script>
+    
     <!--Content-->
+    </head>
+    <body onload="generateCaptcha()">
 <div class="container">
     <div class="heading">Admin Login</div>
-    <form action="" method="POST" class="form" onsubmit="return onLogin()">
-      <input required="" class="input" type="email" name="email" id="email" placeholder="E-mail">
-      <input required="" class="input" type="password" name="password" id="password" placeholder="Password">
-      <span class="forgot-password"><a href="#">Forgot Password ?</a></span>
-      <input class="login-button" type="submit" value="Login">
+    <form action="" method="POST" class="form" onsubmit="return validateCaptcha()">
+      <input required class="input" type="email" name="email" id="email" placeholder="E-mail">
+      <input required class="input" type="password" name="password" id="password" placeholder="Password">
+      <input class="input" id="captchaContainer" disabled></input>
+      <input required class="input" type="text" id="captchaInput">
+      <input class="login-button" type="submit" value="Login" id="login">
       
     </form>
       <span class="agreement"><a href="#">Learn user licence agreement</a></span>
       <script>
+        var captchaText = "";
+        var captchaInput = "";
+        function generateCaptcha() {
+          var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+          var length = 6;
+          captchaText = "";
+          
+          for (var i = 0; i < length; i++) {
+            captchaText += characters.charAt(Math.floor(Math.random() * characters.length));
+          }
+          
+          // Display the CAPTCHA in the container
+          document.getElementById("captchaContainer").value = captchaText;
+        }
+        function validateCaptcha() {
+          captchaInput = document.getElementById("captchaInput").value;
+
+          if (captchaInput === captchaText) {
+            return onLogin();
+          } else {
+            alert("Captcha is invalid!");
+            generateCaptcha(); // Regenerate CAPTCHA on invalid input
+          }
+
+          // Clear the input field
+          document.getElementById("captchaInput").value = "";
+        }
+
         function onLogin(){
           var req = new XMLHttpRequest();
           var url = "/api/login";
@@ -36,10 +69,15 @@
             var responseObject = JSON.parse(responseText);
             document.cookie = `PWL-SESSION = ${responseObject.Token}`;
             window.location.href = '/';
+          } else {
+            alert("Wrong Email and Password");
           }
           };
           req.send(datajson);
           return false;
       }
       </script>
+      
   </div>
+</body>
+</html>
