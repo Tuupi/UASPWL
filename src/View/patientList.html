@@ -26,6 +26,8 @@
             <th>Parent's Name</th>
             <th>Parent's Number</th>
             <th>Guardian Name</th>
+            <th>Edit</th>
+            <th>Records</th>
           </tr>
         </thead>
         <tbody>
@@ -58,7 +60,19 @@
             { data: 'occupation' },
             { data: 'parent_name' },
             { data: 'parent_phone' },
-            { data: 'guardian_name' }
+            { data: 'guardian_name' },
+            {
+              data: null,
+            render: function(data, type, row) {
+            return '<button class="btn btn-primary">Edit</button>';
+            }
+            },
+            {
+              data: null,
+            render: function(data, type, row) {
+            return '<button class="btn btn-primary">Records</button>';
+            }
+          }
           ]
         });
 

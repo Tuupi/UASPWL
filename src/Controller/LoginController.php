@@ -32,7 +32,6 @@ class LoginController{
                     echo json_encode(["errors" => "Username & password tidak valid"]);
                     break;
                 }
-                
                 $session = new SessionController();
                 $session = $session->sessionCreate($login);
                 echo json_encode(["Message" => "Login Confirmed", "Token" => $session]);
